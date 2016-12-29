@@ -59,8 +59,6 @@ $(function() {
         ];
 
     init();
-
-
     function init() {
         fillProjects();
         $('#project-details').hide();

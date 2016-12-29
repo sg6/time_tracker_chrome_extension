@@ -40,3 +40,40 @@ function findProjectById(id) {
     }
     return false;
 }
+
+function findActivityById(id) {
+    for(var i = 0; i < $data.length; i++) {
+        for(var j = 0; j < $data[i].activity.length; j++) {
+            if(id == $data[i].activity[j].id) {
+                return $data[i].activity[j];
+            }
+        }
+        if($data[i].id == id) return $data[i];
+    }
+    return false;
+}
+
+function saveProjectData(id) {
+    if(id === undefined) {
+        // save
+    } else if(findProjectById(id) !== false) {
+        
+    } else {
+        return false;
+    }
+
+    // business logic ...
+
+}
+
+function saveActivityData(project, id) {
+    if(findProjectById(project) == false) return false;
+
+    if(id === undefined) {
+        // save
+    } else {
+
+    }
+
+    // business logic ...
+}
