@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+     <script src="jquery-3.1.1.min.js"></script>
+     <script src="tracking.service.js"></script>
+     <script src="tracking.handlers.js"></script>
+     <script src="tracking.js"></script>
+  </head>
+  <body>
+
+    <header>
+      <h1>Time Tracking</h1>
+    </header>
+
+    <main>
+      <input type="text" id="project-name"><br />
+      <button class="btn btn-danger" id="add-project">Add Project</button>
+
+      <hr>
+
+      <ul id="projects"></ul>
+
+      <div id="project-details">
+        <button class="btn btn-primary" id="backToHome">&lt;</button>
+        <h2>Title</h2>
+        <div id="desc">Description</div>
+        <div id="url">http://google.com</div>
+        <div id="workingTime">10000s</div>
+        <ul id="activities">
+          <li>first</li>
+          <li>second</li>
+          <li>last</li>
+        </ul>
+      </div>
+    </main>
+
+    <hr>
+    <footer>
+      <button class="btn" id="refresh">Refresh</button> <br />
+      <pre id="debug"></pre>
+    </footer>
+  </body>
+</html>
+

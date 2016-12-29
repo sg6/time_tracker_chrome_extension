@@ -1,0 +1,31 @@
+body {
+    font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+    font-size: 100%;
+    width: 400px;
+    font-size: 16px;
+}
+
+#projects {
+    margin: 0;
+    padding: 0;
+}
+
+#projects li {
+    list-style-type: none;
+    padding: 10px 30px;
+    margin: 10px 0;
+    background: #eee;
+}
+
+#projects li:hover {
+    cursor: pointer;
+    background: #ddd;
+}
+
+#debug {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.project-item .desc {
+}
