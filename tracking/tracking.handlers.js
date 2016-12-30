@@ -6,7 +6,12 @@ $(function() {
     });
 
     $(document).on('click', '#save-activity', function() {
-        saveActivityData(3);
+        saveActivityData($currentProject);
+    });
+
+    $(document).on('click', '#new-project', function() {
+        $('.new-project').slideToggle(150);
+        $(this).find('span').toggle();
     });
 
     $(document).on('click', '.project-item', function(e) {
@@ -14,6 +19,8 @@ $(function() {
         showProject(findProjectById(_this.data('id')));
         $('#projects').slideUp(150);
         $('#project-details').slideDown(150);
+
+        $currentProject = _this.data('id');
         
     });
 

@@ -1,6 +1,6 @@
 function fillProjects() {
     $('#projects').html('');
-    for(var i = 0; i < $data.projects.length; i++) {
+    for(var i = $data.projects.length-1; i >= 0; i--) {
         $d = $data.projects[i];
         appendToList($('#projects'), $d, 'project-item');
     }
@@ -24,7 +24,7 @@ function showProject(item) {
     p.find('#workingTime').html(item.workingTime+"s");
 
     $act = "";
-    for(var i = 0; i < item.activity.length; i++) {
+    for(var i = item.activity.length -1; i >= 0; i--) {
         $act +="<li>";
         $act +="<h3>"+item.activity[i].name+"</h3>";
         $act +="<span>"+item.activity[i].begin+" ("+item.activity[i].end+")</span>";
@@ -97,6 +97,6 @@ function saveActivityData(project, id) {
         showProject($p);
 
     } else {
-        
+
     }
 }

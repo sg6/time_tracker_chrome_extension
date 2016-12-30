@@ -81,6 +81,8 @@ $(function() {
         "isDeleted" : false
     };
 
+    $currentProject = -1;
+
     init();
     function init() {
         fillProjects();
