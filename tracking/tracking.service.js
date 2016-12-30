@@ -1,6 +1,7 @@
 function fillProjects() {
-    for(var i = 0; i < $data.length; i++) {
-        $d = $data[i];
+    $('#projects').html('');
+    for(var i = 0; i < $data.projects.length; i++) {
+        $d = $data.projects[i];
         appendToList($('#projects'), $d, 'project-item');
     }
 }
@@ -8,8 +9,8 @@ function fillProjects() {
 function appendToList(list, item, className) {
     $str  = '<li class="'+className+'" data-id="'+item.id+'">';
     $str += '<h3 style="color:#'+item.colour+'" class="title">'+item.name+'</h3> ';
-    $str += '<span class="duration">('+(item.workingTime/3600)+'h)</span><br />';
-    $str += '<span class="desc">'+item.description+'</span>';
+    $str += '<span class="desc">'+item.description+'</span> ';
+    $str += '<span class="duration">('+(item.workingTime/3600)+'h)</span>';
     $str += '</li>';
     list.append($str);
 }
@@ -35,20 +36,20 @@ function showProject(item) {
 }
 
 function findProjectById(id) {
-    for(var i = 0; i < $data.length; i++) {
-        if($data[i].id == id) return $data[i];
+    for(var i = 0; i < $data.projects.length; i++) {
+        if($data.projects[i].id == id) return $data.projects[i];
     }
     return false;
 }
 
 function findActivityById(id) {
-    for(var i = 0; i < $data.length; i++) {
-        for(var j = 0; j < $data[i].activity.length; j++) {
-            if(id == $data[i].activity[j].id) {
-                return $data[i].activity[j];
+    for(var i = 0; i < $data.projects.length; i++) {
+        for(var j = 0; j < $data.projects[i].activity.length; j++) {
+            if(id == $data.projects[i].activity[j].id) {
+                return $data.projects[i].activity[j];
             }
         }
-        if($data[i].id == id) return $data[i];
+        if($data.projects[i].id == id) return $data.projects[i];
     }
     return false;
 }
@@ -56,13 +57,26 @@ function findActivityById(id) {
 function saveProjectData(id) {
     if(id === undefined) {
         // save
+        $p = $.extend({}, $project);
+        $fields = ["name", "description", "url", "colour"];
+        $p.id = ++$data.lastProjectId;
+        for(var i = 0; i < $fields.length; i++) {
+            if($('#project-'+$fields[i]).val().length > 0) $p[$fields[i]] = $('#project-'+$fields[i]).val();
+        }
+
+        if($data.projects.push($p)) return true;
     } else if(findProjectById(id) !== false) {
-        
+        // update
+        $p = findProjectById(id);
+        $fields = ["name", "description", "url", "colour"];
+        for(var i = 0; i < $fields.length; i++) {
+            if($('#project-'+$fields[i]).val().length > 0) $p[$fields[i]] = $('#project-'+$fields[i]).val();
+        }
+
+
     } else {
         return false;
     }
-
-    // business logic ...
 
 }
 
@@ -71,9 +85,18 @@ function saveActivityData(project, id) {
 
     if(id === undefined) {
         // save
+        if($('#activity-name').val().length < 1) return false;
+
+        $a = $.extend({}, $activity);
+        $a.id = ++$data.lastActivityId;
+        $a.name = $('#activity-name').val();
+
+        $p = findProjectById(project);
+
+        $p.activity.push($a);
+        showProject($p);
+
     } else {
-
+        
     }
-
-    // business logic ...
 }

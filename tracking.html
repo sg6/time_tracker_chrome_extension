@@ -18,7 +18,10 @@
     </header>
 
     <main>
-      <input type="text" id="project-name"><br />
+      <input type="text" id="project-name" placeholder="Name" value="Bing"><br />
+      <input type="text" id="project-description" placeholder="Description" value="Bing website project"><br />
+      <input type="text" id="project-url" placeholder="URL" value="http://bing.com"><br />
+      <input type="text" id="project-colour" placeholder="Colour"><br />
       <button class="btn btn-danger" id="add-project">Add Project</button>
 
       <hr>
@@ -27,6 +30,12 @@
 
       <div id="project-details">
         <button class="btn btn-primary" id="backToHome">&lt;</button>
+
+        <div class="form">
+          <input type="text" id="activity-name"> <br />
+          <button id="save-activity" class="btn btn-warning">Add Activity</button>
+        </div>
+
         <h2>Title</h2>
         <div id="desc">Description</div>
         <div id="url">http://google.com</div>

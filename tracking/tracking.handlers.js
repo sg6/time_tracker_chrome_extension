@@ -1,9 +1,12 @@
 $(function() {
 
     $(document).on('click', '#add-project', function() {
-        $project = $('#project-name').val();
-        $('#projects').append('<li>' + $project + '</li>');
-        $('#project-name').val("");
+        saveProjectData();
+        fillProjects();
+    });
+
+    $(document).on('click', '#save-activity', function() {
+        saveActivityData(3);
     });
 
     $(document).on('click', '.project-item', function(e) {
@@ -12,7 +15,7 @@ $(function() {
         $('#projects').slideUp(150);
         $('#project-details').slideDown(150);
         
-    })
+    });
 
     $(document).on('click', '#refresh', function() {
         $('#debug').html(JSON.stringify($data));
