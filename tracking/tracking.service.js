@@ -1,5 +1,15 @@
 function fillProjects() {
+    $data = loadFromStorage();
+
     $('#projects').html('');
+
+    if($data.projects.length < 1) {
+        $('#projects').html('<li>No projects added');
+        toggleAddProject();
+    }
+
+    console.log($data);
+
     for(var i = $data.projects.length-1; i >= 0; i--) {
         $d = $data.projects[i];
         appendToList($('#projects'), $d, 'project-item');
@@ -13,6 +23,11 @@ function appendToList(list, item, className) {
     $str += '<span class="duration">('+(item.workingTime/3600)+'h)</span>';
     $str += '</li>';
     list.append($str);
+}
+
+function toggleAddProject() {
+    $('.new-project').slideToggle(150);
+    $('#new-project').find('span').toggle();
 }
 
 function showProject(item) {
@@ -36,6 +51,8 @@ function showProject(item) {
 }
 
 function findProjectById(id) {
+    $data = loadFromStorage();
+
     for(var i = 0; i < $data.projects.length; i++) {
         if($data.projects[i].id == id) return $data.projects[i];
     }
@@ -43,6 +60,8 @@ function findProjectById(id) {
 }
 
 function findActivityById(id) {
+    $data = loadFromStorage();
+
     for(var i = 0; i < $data.projects.length; i++) {
         for(var j = 0; j < $data.projects[i].activity.length; j++) {
             if(id == $data.projects[i].activity[j].id) {
@@ -55,6 +74,8 @@ function findActivityById(id) {
 }
 
 function saveProjectData(id) {
+    $data = loadFromStorage();
+
     if(id === undefined) {
         // save
         $p = $.extend({}, $project);
@@ -64,7 +85,7 @@ function saveProjectData(id) {
             if($('#project-'+$fields[i]).val().length > 0) $p[$fields[i]] = $('#project-'+$fields[i]).val();
         }
 
-        if($data.projects.push($p)) return true;
+        if($data.projects.push($p)) return saveToStorage($data);
     } else if(findProjectById(id) !== false) {
         // update
         $p = findProjectById(id);
@@ -73,7 +94,7 @@ function saveProjectData(id) {
             if($('#project-'+$fields[i]).val().length > 0) $p[$fields[i]] = $('#project-'+$fields[i]).val();
         }
 
-
+        return saveToStorage($data)
     } else {
         return false;
     }
@@ -81,6 +102,8 @@ function saveProjectData(id) {
 }
 
 function saveActivityData(project, id) {
+    $data = loadFromStorage();
+    
     if(findProjectById(project) == false) return false;
 
     if(id === undefined) {
@@ -96,7 +119,18 @@ function saveActivityData(project, id) {
         $p.activity.push($a);
         showProject($p);
 
-    } else {
+        return saveToStorage($data)
 
+    } else {
+        return saveToStorage($data)
     }
+}
+
+function saveToStorage(data) {
+    return localStorage.setItem('timeTrackerData', JSON.stringify(data));
+}
+
+function loadFromStorage() {
+    $storage = localStorage.getItem('timeTrackerData');
+    return JSON.parse($storage);
 }

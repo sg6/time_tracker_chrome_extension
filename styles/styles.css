@@ -38,3 +38,16 @@ h1, h3 {
 .form {
     margin-top: 12px;
 }
+
+#save-activity {
+    border-radius: 50%;
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    line-height: 30px;
+}
+
+#new-project span {
+    width: 10px;
+    display: inline-block;
+}

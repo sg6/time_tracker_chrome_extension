@@ -8,6 +8,9 @@ Track activities for your projects and get statistics and export functions
 
 * change name of activities
 * export data as JSON
+* set value "billable" for activity
+* start / stop activity
+* show time properly
 
 *for 0.2.0*
 

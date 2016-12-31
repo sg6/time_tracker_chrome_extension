@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
+    <title>Time Tracking</title>
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="libs/fa/font-awesome.css">
 
      <script src="libs/jquery-3.1.1.min.js"></script>
      <script src="libs/moment.min.js"></script>
@@ -34,11 +35,11 @@
       <ul id="projects"></ul>
 
       <div id="project-details">
-        <button class="btn btn-primary" id="backToHome">&lt;</button>
+        <button class="btn btn-primary" id="backToHome"><i class="fa fa-backward"></i> Back to Overview</button>
 
         <div class="form">
-          <input type="text" id="activity-name"> <br />
-          <button id="save-activity" class="btn btn-warning">Add Activity</button>
+          <input type="text" id="activity-name" value="New Activity"> 
+          <button id="save-activity" class="btn btn-warning"><i class="fa fa-play"></i></button>
         </div>
 
         <h2>Title</h2>

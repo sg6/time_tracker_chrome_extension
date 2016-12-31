@@ -10,8 +10,7 @@ $(function() {
     });
 
     $(document).on('click', '#new-project', function() {
-        $('.new-project').slideToggle(150);
-        $(this).find('span').toggle();
+        toggleAddProject();
     });
 
     $(document).on('click', '.project-item', function(e) {
@@ -25,7 +24,7 @@ $(function() {
     });
 
     $(document).on('click', '#refresh', function() {
-        $('#debug').html(JSON.stringify($data));
+        $('#debug').html(JSON.stringify(loadFromStorage()));
     });
 
     $(document).on('click', '#backToHome', function() {
