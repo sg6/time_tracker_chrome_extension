@@ -9,6 +9,10 @@ $(function() {
         saveActivityData($currentProject);
     });
 
+    $(document).on('click', '#stop-activity', function() {
+        stopActivity();
+    });
+
     $(document).on('click', '#new-project', function() {
         toggleAddProject();
     });
@@ -16,7 +20,7 @@ $(function() {
     $(document).on('click', '.project-item', function(e) {
         var _this = $(this);
         showProject(findProjectById(_this.data('id')));
-        $('#projects').slideUp(150);
+        $('.projects-wrapper').slideUp(150);
         $('#project-details').slideDown(150);
 
         $currentProject = _this.data('id');
@@ -28,8 +32,12 @@ $(function() {
     });
 
     $(document).on('click', '#backToHome', function() {
-        $('#projects').slideDown(150);
+        $('.projects-wrapper').slideDown(150);
         $('#project-details').slideUp(150);
+    });
+
+    $(document).on('click', '#activity-name', function() {
+        $(this).select();
     });
 
 });

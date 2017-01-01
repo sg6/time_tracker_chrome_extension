@@ -3,7 +3,11 @@ $(function() {
     $data = {
         "lastProjectId" : 0,
         "lastActivityId" : 100000,
-        "projects" : []
+        "projects" : [],
+        "currentlyRunning" : {
+            "projectId" : -1,
+            "activityId" : -1
+        }
     };
 
     $project = {
@@ -33,10 +37,16 @@ $(function() {
         if(loadFromStorage() == null) saveToStorage($data);
         else $data = loadFromStorage();
 
-        console.log(loadFromStorage());
-
         fillProjects();
-        $('#project-details').hide();
+        if($data.currentlyRunning.projectId > -1) {
+            showProject(findProjectById($data.currentlyRunning.projectId));
+        } else $('#project-details').hide();
+
+        var b = findActivityById(100007).begin;
+        var e = findActivityById(100007).end;
+        console.log(moment(b).format('YYYY-MM-DD H:m'));
+        console.log(moment(e).format('YYYY-MM-DD H:m'));
+        console.log(moment.duration(moment(e).diff(moment(b))).asHours());
     }
 
 });

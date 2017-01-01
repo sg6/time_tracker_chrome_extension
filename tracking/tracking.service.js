@@ -8,8 +8,6 @@ function fillProjects() {
         toggleAddProject();
     }
 
-    console.log($data);
-
     for(var i = $data.projects.length-1; i >= 0; i--) {
         $d = $data.projects[i];
         appendToList($('#projects'), $d, 'project-item');
@@ -30,19 +28,36 @@ function toggleAddProject() {
     $('#new-project').find('span').toggle();
 }
 
-function showProject(item) {
+function showProject(item, data) {
+    $data = data || loadFromStorage();
     var p = $('#project-details');
+    $('.projects-wrapper').hide();
     p.find('h2').html(item.name);
     p.find('h2').css('color', '#'+item.colour);
     p.find('#desc').html(item.description);
     p.find('#url').html('<a href="'+item.url+'" target="_blank">'+item.url+'</a>');
     p.find('#workingTime').html(item.workingTime+"s");
 
+    if($data.currentlyRunning.projectId == item.id) {
+        $('#save-activity').hide();
+        $('#stop-activity').show();
+        $('#project-details .form').show();
+
+    } else if($data.currentlyRunning.projectId > -1) {
+        $('#project-details .form').hide();
+    } else {
+        $('#project-details .form').show();
+        $('#save-activity').show();
+        $('#stop-activity').hide();
+    }
+
     $act = "";
     for(var i = item.activity.length -1; i >= 0; i--) {
+        end = moment(item.activity[i].end);
+        beg = moment(item.activity[i].begin);
         $act +="<li>";
         $act +="<h3>"+item.activity[i].name+"</h3>";
-        $act +="<span>"+item.activity[i].begin+" ("+item.activity[i].end+")</span>";
+        $act +="<span>"+beg.format('YYYY-MM-DD H:mm')+", "+moment.duration(end.diff(beg)).asHours()+"</span>";
         $act +="</li>";
     }
 
@@ -50,8 +65,8 @@ function showProject(item) {
 
 }
 
-function findProjectById(id) {
-    $data = loadFromStorage();
+function findProjectById(id, data) {
+    $data = data || loadFromStorage();
 
     for(var i = 0; i < $data.projects.length; i++) {
         if($data.projects[i].id == id) return $data.projects[i];
@@ -59,8 +74,8 @@ function findProjectById(id) {
     return false;
 }
 
-function findActivityById(id) {
-    $data = loadFromStorage();
+function findActivityById(id, data) {
+    $data = data || loadFromStorage();
 
     for(var i = 0; i < $data.projects.length; i++) {
         for(var j = 0; j < $data.projects[i].activity.length; j++) {
@@ -111,19 +126,44 @@ function saveActivityData(project, id) {
         if($('#activity-name').val().length < 1) return false;
 
         $a = $.extend({}, $activity);
+
         $a.id = ++$data.lastActivityId;
         $a.name = $('#activity-name').val();
 
-        $p = findProjectById(project);
-
+        $p = findProjectById(project, $data);
         $p.activity.push($a);
-        showProject($p);
+
+        $data.currentlyRunning.projectId = project;
+        $data.currentlyRunning.activityId = $data.lastActivityId;
+
+        showProject($p, $data);
 
         return saveToStorage($data)
 
     } else {
         return saveToStorage($data)
     }
+}
+
+function stopActivity() {
+    $data = loadFromStorage();
+
+    $('.activity-trigger').toggle();
+
+    if($data.currentlyRunning.activityId == -1) return false;
+    var $a = findActivityById($data.currentlyRunning.activityId);
+    $a.end = new Date();
+
+    $p = $data.currentlyRunning.projectId;
+    $data.currentlyRunning.projectId  = -1;
+    $data.currentlyRunning.activityId = -1;
+
+    saveToStorage($data);
+
+    showProject(findProjectById($p));
+    console.log($data);
+    
+    return true;
 }
 
 function saveToStorage(data) {

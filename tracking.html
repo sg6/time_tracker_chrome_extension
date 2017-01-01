@@ -19,27 +19,29 @@
     </header>
 
     <main>
-      <button class="btn btn-danger" id="new-project">
-        <span>+</span><span style="display: none;">-</span> New Project
-      </button>
-      <div class="form new-project" style="display: none;">
-        <input type="text" id="project-name" placeholder="Name" value="Bing"><br />
-        <input type="text" id="project-description" placeholder="Description" value="Bing website project"><br />
-        <input type="text" id="project-url" placeholder="URL" value="http://bing.com"><br />
-        <input type="text" id="project-colour" placeholder="Colour"><br />
-        <button class="btn btn-danger" id="add-project">Add Project</button>
+
+      <div class="projects-wrapper">
+        <button class="btn btn-danger" id="new-project">
+          <span>+</span><span style="display: none;">-</span> New Project
+        </button>
+        <div class="form new-project" style="display: none;">
+          <input type="text" id="project-name" placeholder="Name" value="Bing"><br />
+          <input type="text" id="project-description" placeholder="Description" value="Bing website project"><br />
+          <input type="text" id="project-url" placeholder="URL" value="http://bing.com"><br />
+          <input type="text" id="project-colour" placeholder="Colour"><br />
+          <button class="btn btn-danger" id="add-project">Add Project</button>
+        </div>
+
+        <ul id="projects"></ul>
       </div>
-
-      <hr>
-
-      <ul id="projects"></ul>
 
       <div id="project-details">
         <button class="btn btn-primary" id="backToHome"><i class="fa fa-backward"></i> Back to Overview</button>
 
         <div class="form">
           <input type="text" id="activity-name" value="New Activity"> 
-          <button id="save-activity" class="btn btn-warning"><i class="fa fa-play"></i></button>
+          <button id="save-activity" class="btn btn-success activity-trigger"><i class="fa fa-play"></i></button>
+          <button id="stop-activity" class="btn btn-danger  activity-trigger"><i class="fa fa-stop"></i></button>
         </div>
 
         <h2>Title</h2>

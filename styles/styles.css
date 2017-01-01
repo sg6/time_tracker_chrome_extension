@@ -39,7 +39,7 @@ h1, h3 {
     margin-top: 12px;
 }
 
-#save-activity {
+.activity-trigger {
     border-radius: 50%;
     margin-left: 10px;
     width: 50px;
