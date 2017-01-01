@@ -44,9 +44,6 @@ $(function() {
 
         var b = findActivityById(100007).begin;
         var e = findActivityById(100007).end;
-        console.log(moment(b).format('YYYY-MM-DD H:m'));
-        console.log(moment(e).format('YYYY-MM-DD H:m'));
-        console.log(moment.duration(moment(e).diff(moment(b))).asHours());
     }
 
 });

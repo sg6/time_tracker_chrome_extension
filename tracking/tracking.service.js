@@ -55,9 +55,16 @@ function showProject(item, data) {
     for(var i = item.activity.length -1; i >= 0; i--) {
         end = moment(item.activity[i].end);
         beg = moment(item.activity[i].begin);
+
+        dur = moment.duration(end.diff(beg));
+
+        if(dur.asHours() < 1) dur = Math.ceil(dur.asMinutes()) + "m";
+        else dur = Math.floor(dur.asHours()) + "h " + Math.ceil((dur.asHours() - Math.floor(dur.asHours())) * 60) + "m";
+
+
         $act +="<li>";
         $act +="<h3>"+item.activity[i].name+"</h3>";
-        $act +="<span>"+beg.format('YYYY-MM-DD H:mm')+", "+moment.duration(end.diff(beg)).asHours()+"</span>";
+        $act +="<span>"+beg.format('YYYY-MM-DD, H:mm')+": "+dur+"</span>";
         $act +="</li>";
     }
 
@@ -161,7 +168,6 @@ function stopActivity() {
     saveToStorage($data);
 
     showProject(findProjectById($p));
-    console.log($data);
     
     return true;
 }
