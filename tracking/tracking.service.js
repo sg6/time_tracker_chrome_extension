@@ -15,10 +15,11 @@ function fillProjects() {
 }
 
 function appendToList(list, item, className) {
+    var workingTime = Math.floor(item.workingTime / 3600) + "h " + Math.ceil((item.workingTime % 3600)/60) + "m";
     $str  = '<li class="'+className+'" data-id="'+item.id+'">';
     $str += '<h3 style="color:#'+item.colour+'" class="title">'+item.name+'</h3> ';
     $str += '<span class="desc">'+item.description+'</span> ';
-    $str += '<span class="duration">('+(item.workingTime/3600)+'h)</span>';
+    $str += '<span class="duration">('+workingTime+')</span>';
     $str += '</li>';
     list.append($str);
 }
@@ -31,12 +32,13 @@ function toggleAddProject() {
 function showProject(item, data) {
     $data = data || loadFromStorage();
     var p = $('#project-details');
+    var workingTime = Math.floor(item.workingTime / 3600) + "h " + Math.ceil((item.workingTime % 3600)/60) + "m";
     $('.projects-wrapper').hide();
     p.find('h2').html(item.name);
     p.find('h2').css('color', '#'+item.colour);
     p.find('#desc').html(item.description);
     p.find('#url').html('<a href="'+item.url+'" target="_blank">'+item.url+'</a>');
-    p.find('#workingTime').html(item.workingTime+"s");
+    p.find('#workingTime').html(workingTime);
 
     if($data.currentlyRunning.projectId == item.id) {
         $('#save-activity').hide();
@@ -165,11 +167,25 @@ function stopActivity() {
     $data.currentlyRunning.projectId  = -1;
     $data.currentlyRunning.activityId = -1;
 
+    saveCurrentDurationToProject($p, $data);
+
     saveToStorage($data);
 
     showProject(findProjectById($p));
     
     return true;
+}
+
+function saveCurrentDurationToProject(projectId, $data) {
+    $project = findProjectById(projectId, $data);
+    var duration = 0;
+    var $a;
+    for(var i = 0; i < $project.activity.length; i++) {
+        $a = $project.activity[i];
+        duration += moment($a.end) - moment($a.begin);
+    }
+    duration = Math.floor(duration/1000);
+    $p.workingTime = duration;
 }
 
 function saveToStorage(data) {
